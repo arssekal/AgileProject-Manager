@@ -12,13 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class UserStoryDto {
-    private Long id;
-    private  String titre;
-    private String description;
+    private String   titre;
+    private String   description;
     private Priority priority;
-    private Status statut;
-    private String critereAcceptation;
-    private EpicDto epic;
-    private ProductBacklogDto productBacklog;
-    private SprintBacklogDto sprintBacklog;
+    private Status   statut;
+    private String   critereAcceptation;
 }

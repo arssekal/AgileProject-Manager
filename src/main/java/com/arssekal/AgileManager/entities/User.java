@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role")
+@DiscriminatorValue("user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user_story")
+@Table(name = "user")
 @Builder
 public class User {
     @Id
@@ -22,4 +23,11 @@ public class User {
     private String nom;
     private String email;
     private String password;
+
+    @OneToOne(mappedBy = "scrumMaster")
+    private Sprint sprint;
+    @OneToOne(mappedBy = "productOwner")
+    private Project project;
+    @OneToOne(mappedBy = "developer")
+    private Task task;
 }

@@ -11,8 +11,7 @@ import java.util.List;
 @Data
 @Builder
 public class EpicDto {
-    private Long id;
     private String titre;
     private String description;
-    private List<UserStoryDto> userStories;
+//    private List<UserStoryDto> userStories;
 }

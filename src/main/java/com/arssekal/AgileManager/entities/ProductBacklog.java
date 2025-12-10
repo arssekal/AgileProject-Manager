@@ -19,5 +19,10 @@ public class ProductBacklog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
+    private String description;
+    @OneToMany(mappedBy = "productBacklog")
     private List<Epic> epics;
+    @OneToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }

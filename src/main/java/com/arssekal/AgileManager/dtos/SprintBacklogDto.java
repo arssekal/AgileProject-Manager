@@ -16,6 +16,6 @@ public class SprintBacklogDto {
     private String nom;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
-    private List<UserStoryDto> UserStories;
+    private List<UserStoryDto> userStories;
     private List<TaskDto> tasks;
 }

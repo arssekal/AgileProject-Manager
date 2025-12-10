@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -22,8 +25,17 @@ public class UserStory {
     // En tant que [type d’utilisateur], je veux [fonctionnalité], afin de [bénéfice].
     private String description;
     private Priority priority;
+//    @ColumnDefault("TO_DO")
     private Status statut;
     private String critereAcceptation;
+    @ManyToOne
+    @JoinColumn(name = "epic_id")
     private Epic epic;
+
+    @OneToMany(mappedBy = "userStory", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
+    @ManyToOne
+    @JoinColumn(name = "sprintBacklog_id")
     private SprintBacklog sprintBacklog;
 }

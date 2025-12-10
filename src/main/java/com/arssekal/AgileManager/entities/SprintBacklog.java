@@ -1,9 +1,6 @@
 package com.arssekal.AgileManager.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +19,8 @@ public class SprintBacklog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
+    @OneToMany(mappedBy = "sprintBacklog", cascade = CascadeType.ALL)
     private List<UserStory> UserStories;
+    @OneToOne(mappedBy = "sprintBacklog", cascade = CascadeType.ALL)
+    private Sprint sprint;
 }

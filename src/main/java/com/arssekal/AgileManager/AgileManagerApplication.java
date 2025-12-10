@@ -9,5 +9,4 @@ public class AgileManagerApplication {
 		SpringApplication.run(AgileManagerApplication.class, args);
 		System.out.println("running...");
 	}
-
 }

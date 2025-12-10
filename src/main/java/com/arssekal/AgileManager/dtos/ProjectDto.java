@@ -1,5 +1,4 @@
 package com.arssekal.AgileManager.dtos;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class ProductBacklogDto {
+public class ProjectDto {
     private String nom;
     private String description;
-//    private List<EpicDto> epics;
+    private Long productOwnerId;
+    private ProductBacklogDto productBacklogData;
 }
