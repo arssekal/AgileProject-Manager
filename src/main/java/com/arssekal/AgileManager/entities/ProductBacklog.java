@@ -1,6 +1,8 @@
 package com.arssekal.AgileManager.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +20,11 @@ public class ProductBacklog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String nom;
+    @NotBlank
+    @Size(min = 10, max = 100)
     private String description;
     @OneToMany(mappedBy = "productBacklog")
     private List<Epic> epics;

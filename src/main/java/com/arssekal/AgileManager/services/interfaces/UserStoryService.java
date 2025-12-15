@@ -2,6 +2,8 @@ package com.arssekal.AgileManager.services.interfaces;
 
 import com.arssekal.AgileManager.dtos.TaskDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
+import com.arssekal.AgileManager.entities.UserStory;
+import com.arssekal.AgileManager.enums.Status;
 
 import java.util.List;
 
@@ -15,4 +17,6 @@ public interface UserStoryService {
     List<TaskDto> getUserStoryTasks(Long userStoryId);
 
     UserStoryDto deleteUseStoryWithTasks(Long userStoryId);
+
+    UserStoryDto changeUserStoryStatus(Long id, Status status);
 }

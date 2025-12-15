@@ -5,9 +5,9 @@ import com.arssekal.AgileManager.dtos.ProjectDto;
 import com.arssekal.AgileManager.entities.Project;
 
 public interface ProjectService {
-    void createProject(ProjectDto projectDto);
+    ProjectDto createProject(ProjectDto projectDto);
 
-    Project getProject(Long projectID);
+    ProjectDto getProject(Long projectID);
 
     ProjectDto updateProjectInfos(Long projectID, ProjectDto newProjectDto);
 

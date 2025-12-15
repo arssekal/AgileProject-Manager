@@ -5,5 +5,4 @@ import jakarta.persistence.*;
 @Entity
 @DiscriminatorValue("scrum_master")
 public class ScrumMaster extends User {
-
 }

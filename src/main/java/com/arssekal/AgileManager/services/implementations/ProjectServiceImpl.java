@@ -6,6 +6,7 @@ import com.arssekal.AgileManager.entities.Epic;
 import com.arssekal.AgileManager.entities.ProductBacklog;
 import com.arssekal.AgileManager.entities.ProductOwner;
 import com.arssekal.AgileManager.entities.Project;
+import com.arssekal.AgileManager.exceptions.ProjectNotFoundException;
 import com.arssekal.AgileManager.mappers.Mapper;
 import com.arssekal.AgileManager.repositories.EpicRepository;
 import com.arssekal.AgileManager.repositories.ProjectRepository;
@@ -24,8 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
     private EpicRepository epicRepository;
 
     @Override
-    public void createProject(ProjectDto projectDto) {
-        ProductOwner productOwner = userService.getUser(projectDto.getProductOwnerId());
+    public ProjectDto createProject(ProjectDto projectDto) {
+        ProductOwner productOwner = (ProductOwner) userService.getUser(projectDto.getProductOwnerId());
         Project project = Mapper.mapToProject(projectDto);
         project.setProductOwner(productOwner);
         productOwner.setProject(project);
@@ -34,23 +35,25 @@ public class ProjectServiceImpl implements ProjectService {
                 .titre("globale")
                 .description("epic qui regroupe les epics globales")
                 .build();
-        epic.setProductBacklog(productBacklog);
 
+        epic.setProductBacklog(productBacklog);
         project.setProductBacklog(productBacklog);
         productBacklog.setProject(project);
 
-        projectRepository.save(project);
+        Project savedProject =  projectRepository.save(project);
         epicRepository.save(epic);
+        return Mapper.mapToProjectDto(savedProject);
     }
 
     @Override
-    public Project getProject(Long projectID) {
-        return projectRepository.findById(projectID).orElseThrow(() -> new RuntimeException("project with this id isn't found"));
+    public ProjectDto getProject(Long projectID) {
+        Project project = project(projectID);
+        return Mapper.mapToProjectDto(project);
     }
 
     @Override
     public ProjectDto updateProjectInfos(Long projectID, ProjectDto newProjectDto) {
-        Project project = projectRepository.findById(projectID).orElseThrow(() -> new RuntimeException("project with this id isn't found"));
+        Project project = project(projectID);
         project.setNom(newProjectDto.getNom());
         project.setDescription(newProjectDto.getDescription());
         projectRepository.save(project);
@@ -58,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
     @Override
     public ProjectDto deleteProject(Long projectID) {
-        Project project = projectRepository.findById(projectID).orElseThrow(() -> new RuntimeException("project with this id isn't found"));
+        Project project = project(projectID);
         project.getProductOwner().setProject(null);
         projectRepository.delete(project);
         return Mapper.mapToProjectDto(project);
@@ -66,7 +69,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProductBacklogDto getProductBacklog(Long projectID) {
-        Project project = projectRepository.findById(projectID).orElseThrow(() -> new RuntimeException("project with this id isn't found"));
+        Project project = project(projectID);
         return Mapper.mapToProductBacklogDto(project.getProductBacklog());
+    }
+    private Project project(Long id) {
+        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }
 }

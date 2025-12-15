@@ -1,4 +1,5 @@
 package com.arssekal.AgileManager.dtos;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,8 +15,7 @@ import lombok.NoArgsConstructor;
 public class SprintBacklogDto {
     private Long id;
     private String nom;
-    private LocalDateTime dateDebut;
-    private LocalDateTime dateFin;
-    private List<UserStoryDto> userStories;
-    private List<TaskDto> tasks;
+    private Long scrumMasterId;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
 }

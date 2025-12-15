@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class TaskDto {
+    private Long id;
     private String titre;
     private String description;
     private Status statut;

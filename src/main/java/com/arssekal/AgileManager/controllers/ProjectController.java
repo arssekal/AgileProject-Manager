@@ -6,38 +6,44 @@ import com.arssekal.AgileManager.entities.Project;
 import com.arssekal.AgileManager.mappers.Mapper;
 import com.arssekal.AgileManager.services.interfaces.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// /api/projects
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @PostMapping("/")
-    public void createProject(@RequestBody ProjectDto projectDto) {
-        projectService.createProject(projectDto);
+    @PostMapping("")
+    public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
+        ProjectDto project = projectService.createProject(projectDto);
+        return new ResponseEntity<>(project, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ProjectDto getProject(@PathVariable("id") Long projectID) {
-        Project project = projectService.getProject(projectID);
-        return Mapper.mapToProjectDto(project);
+    public ResponseEntity<ProjectDto> getProject(@PathVariable Long id) {
+        // exception gérer par controller advise
+        ProjectDto project = projectService.getProject(id);
+        return ResponseEntity.ok(project);
     }
 
     @PutMapping("/{id}")
-    public ProjectDto updateProject(@PathVariable("id") Long projectID, @RequestBody ProjectDto newProjectDto) {
-        return projectService.updateProjectInfos(projectID, newProjectDto);
+    public ResponseEntity<?> updateProject(@PathVariable("id") Long projectID, @RequestBody ProjectDto newProjectDto) {
+        ProjectDto project = projectService.updateProjectInfos(projectID, newProjectDto);
+        return ResponseEntity.ok(project);
     }
 
     @DeleteMapping("/{id}")
-    public ProjectDto deleteProject(@PathVariable("id") Long projectID) {
-        return projectService.deleteProject(projectID);
+    public ResponseEntity<String> deleteProject(@PathVariable("id") Long projectID) {
+        ProjectDto project = projectService.deleteProject(projectID);
+        return ResponseEntity.ok("project deleted successfully");
     }
 
     @GetMapping("/{id}/backlog")
-    public ProductBacklogDto getProductBacklog(@PathVariable("id") Long projectID) {
-        return projectService.getProductBacklog(projectID);
+    public ResponseEntity<?> getProductBacklog(@PathVariable("id") Long projectID) {
+        ProductBacklogDto productBacklog = projectService.getProductBacklog(projectID);
+        return ResponseEntity.ok(productBacklog);
     }
 }

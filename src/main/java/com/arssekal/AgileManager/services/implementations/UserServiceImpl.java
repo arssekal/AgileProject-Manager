@@ -1,7 +1,10 @@
 package com.arssekal.AgileManager.services.implementations;
 
+import com.arssekal.AgileManager.entities.Developer;
 import com.arssekal.AgileManager.entities.ProductOwner;
+import com.arssekal.AgileManager.entities.ScrumMaster;
 import com.arssekal.AgileManager.entities.User;
+import com.arssekal.AgileManager.exceptions.UserNotFoundException;
 import com.arssekal.AgileManager.repositories.UserRepository;
 import com.arssekal.AgileManager.services.interfaces.UserService;
 
@@ -14,12 +17,22 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User getUser(Long userId) {
+        return  userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     @Override
-    public ProductOwner getUser(Long productOwnerId) {
-        return (ProductOwner) userRepository.findById(productOwnerId).orElseThrow(() -> new RuntimeException("product owner id not found"));
+    public void createProductOwner(ProductOwner productOwner) {
+        userRepository.save(productOwner);
+    }
+
+    @Override
+    public void createScrumMaster(ScrumMaster scrumMaster) {
+        userRepository.save(scrumMaster);
+    }
+
+    @Override
+    public void createDeveloper(Developer developer) {
+        userRepository.save(developer);
     }
 }

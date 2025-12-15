@@ -1,19 +1,31 @@
 package com.arssekal.AgileManager.controllers;
 
+import com.arssekal.AgileManager.entities.Developer;
 import com.arssekal.AgileManager.entities.ProductOwner;
+import com.arssekal.AgileManager.entities.ScrumMaster;
 import com.arssekal.AgileManager.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("")
-    public void createUser(@RequestBody ProductOwner user) {
-        userService.saveUser(user);
+    @PostMapping("/product-owner")
+    public void createProductOwner(@RequestBody ProductOwner productOwner) {
+        userService.createProductOwner(productOwner);
+    }
+    @PostMapping("/scrum-master")
+    public void createScrumMaster(@RequestBody ScrumMaster scrumMaster) {
+        userService.createScrumMaster(scrumMaster);
+    }
+    @PostMapping("/developer")
+    public void createDeveloper(@RequestBody Developer developer) {
+        userService.createDeveloper(developer);
     }
 }

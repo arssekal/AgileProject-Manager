@@ -5,6 +5,7 @@ import com.arssekal.AgileManager.dtos.ProductBacklogDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.entities.Epic;
 import com.arssekal.AgileManager.entities.ProductBacklog;
+import com.arssekal.AgileManager.exceptions.ProductBacklogNotFoundException;
 import com.arssekal.AgileManager.mappers.Mapper;
 import com.arssekal.AgileManager.repositories.EpicRepository;
 import com.arssekal.AgileManager.repositories.ProductBacklogRepository;
@@ -59,6 +60,6 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
     }
 
     private ProductBacklog productBacklog(Long id) {
-        return productBacklogRepository.findById(id).orElseThrow(() -> new RuntimeException("product backlog with this id: "+ id +" isn't found"));
+        return productBacklogRepository.findById(id).orElseThrow(() -> new ProductBacklogNotFoundException(id));
     }
 }

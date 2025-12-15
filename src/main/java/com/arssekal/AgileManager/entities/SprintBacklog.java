@@ -1,6 +1,8 @@
 package com.arssekal.AgileManager.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +20,11 @@ public class SprintBacklog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Size(min = 3, max = 50, message = "la longueur de nom du sprintBacklog dois etre entre 3 et 50")
     private String nom;
-    @OneToMany(mappedBy = "sprintBacklog", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sprintBacklog")
     private List<UserStory> UserStories;
-    @OneToOne(mappedBy = "sprintBacklog", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "sprintBacklog")
     private Sprint sprint;
 }

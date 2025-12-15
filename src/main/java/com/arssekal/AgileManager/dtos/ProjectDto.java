@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class ProjectDto {
+    private Long id;
     private String nom;
     private String description;
     private Long productOwnerId;

@@ -4,6 +4,7 @@ import com.arssekal.AgileManager.dtos.EpicDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.entities.Epic;
 import com.arssekal.AgileManager.entities.UserStory;
+import com.arssekal.AgileManager.exceptions.EpicNotFoundException;
 import com.arssekal.AgileManager.mappers.Mapper;
 import com.arssekal.AgileManager.repositories.EpicRepository;
 import com.arssekal.AgileManager.repositories.UserStoryRepository;
@@ -77,6 +78,6 @@ public class EpicServiceImpl implements EpicService {
     }
 
     private Epic epic(Long id) {
-        return epicRepository.findById(id).orElseThrow(() -> new RuntimeException("epic with id: "+id+ " is not found"));
+        return epicRepository.findById(id).orElseThrow(() -> new EpicNotFoundException(id));
     }
 }

@@ -3,7 +3,10 @@ package com.arssekal.AgileManager.services.implementations;
 import com.arssekal.AgileManager.dtos.TaskDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.entities.Task;
+import com.arssekal.AgileManager.entities.User;
 import com.arssekal.AgileManager.entities.UserStory;
+import com.arssekal.AgileManager.enums.Status;
+import com.arssekal.AgileManager.exceptions.UserStoryNotFoundException;
 import com.arssekal.AgileManager.mappers.Mapper;
 import com.arssekal.AgileManager.repositories.TaskRepository;
 import com.arssekal.AgileManager.repositories.UserStoryRepository;
@@ -65,7 +68,15 @@ public class UserStoryServiceImpl implements UserStoryService {
         return Mapper.mapToUserStoryDto(userStory);
     }
 
+    @Override
+    public UserStoryDto changeUserStoryStatus(Long id, Status status) {
+        UserStory userStory = userStory(id);
+        userStory.setStatut(status);
+        UserStory savedUserStory = userStoryRepository.save(userStory);
+        return  Mapper.mapToUserStoryDto(savedUserStory);
+    }
+
     private UserStory userStory(Long id) {
-        return userStoryRepository.findById(id).orElseThrow(() -> new RuntimeException("user story with id "+ id+ " is not found"));
+        return userStoryRepository.findById(id).orElseThrow(() -> new UserStoryNotFoundException(id));
     }
 }

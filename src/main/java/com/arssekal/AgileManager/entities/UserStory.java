@@ -3,6 +3,9 @@ package com.arssekal.AgileManager.entities;
 import com.arssekal.AgileManager.enums.Priority;
 import com.arssekal.AgileManager.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,11 +24,15 @@ public class UserStory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Size(min = 3, max = 30, message = "la longueur de titre du userStory dois etre entre 3 et 30")
     private  String titre;
     // En tant que [type d’utilisateur], je veux [fonctionnalité], afin de [bénéfice].
     private String description;
+    @NotNull(message = "la priority ne peut pas etre null")
     private Priority priority;
-//    @ColumnDefault("TO_DO")
+    // @ColumnDefault("TO_DO")
+    @NotNull(message = "le status ne peut pas etre null")
     private Status statut;
     private String critereAcceptation;
     @ManyToOne

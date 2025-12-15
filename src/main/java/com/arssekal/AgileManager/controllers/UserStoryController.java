@@ -2,8 +2,11 @@ package com.arssekal.AgileManager.controllers;
 
 import com.arssekal.AgileManager.dtos.TaskDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
+import com.arssekal.AgileManager.enums.Status;
 import com.arssekal.AgileManager.services.interfaces.UserStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,31 +19,37 @@ public class UserStoryController {
 
     // Récupérer la User Story.
     @GetMapping("{id}")
-    public UserStoryDto getUserStory(@PathVariable("id") Long userStoryId) {
-        return userStoryService.getUserStory(userStoryId);
+    public ResponseEntity<UserStoryDto> getUserStory(@PathVariable("id") Long userStoryId) {
+        UserStoryDto userStoryDto = userStoryService.getUserStory(userStoryId);
+        return ResponseEntity.ok(userStoryDto);
     }
     // Modifier les attributs (titre, description, statut).
     @PutMapping("{id}")
-    public UserStoryDto updateUserStory(@PathVariable("id") Long userStoryId, @RequestBody UserStoryDto userStoryDto) {
-        return userStoryService.updateUserStory(userStoryId, userStoryDto);
+    public ResponseEntity<UserStoryDto> updateUserStory(@PathVariable("id") Long userStoryId, @RequestBody UserStoryDto userStoryDto) {
+        UserStoryDto userStory = userStoryService.updateUserStory(userStoryId, userStoryDto);
+        return ResponseEntity.ok(userStory);
     }
     // Créer une Tâche pour cette User Story.
     @PostMapping("{id}/tasks")
-    public TaskDto createTask(@PathVariable("id") Long userStoryId, @RequestBody TaskDto taskDto) {
-        return userStoryService.createTask(userStoryId, taskDto);
+    public ResponseEntity<TaskDto> createTask(@PathVariable("id") Long userStoryId, @RequestBody TaskDto taskDto) {
+        TaskDto task = userStoryService.createTask(userStoryId, taskDto);
+        return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
     // Lister toutes les Tâches de cette User Story.
     @GetMapping("{id}/tasks")
-    public List<TaskDto> getUserStoryTasks(@PathVariable("id") Long userStoryId) {
-        return userStoryService.getUserStoryTasks(userStoryId);
+    public ResponseEntity<List<TaskDto>> getUserStoryTasks(@PathVariable("id") Long userStoryId) {
+        List<TaskDto> tasks = userStoryService.getUserStoryTasks(userStoryId);
+        return ResponseEntity.ok(tasks);
     }
     // Supprimer la User Story.
     @DeleteMapping("{id}")
-    public UserStoryDto deleteUseStoryWithTasks(@PathVariable("id") Long userStoryId) {
-        return userStoryService.deleteUseStoryWithTasks(userStoryId);
+    public ResponseEntity<UserStoryDto> deleteUseStoryWithTasks(@PathVariable("id") Long userStoryId) {
+        UserStoryDto userStoryDto =  userStoryService.deleteUseStoryWithTasks(userStoryId);
+        return ResponseEntity.ok(userStoryDto);
     }
-    @PutMapping("")
-    public void changeUserStoryStatus() {
-        // do something
+    @PutMapping("{id}/change-status")
+    public ResponseEntity<UserStoryDto> changeUserStoryStatus(@PathVariable Long id, @RequestParam Status status) {
+        UserStoryDto userStoryDto = userStoryService.changeUserStoryStatus(id, status);
+        return ResponseEntity.ok(userStoryDto);
     }
 }

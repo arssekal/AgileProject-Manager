@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class ProductBacklogDto {
+    private Long id;
     private String nom;
     private String description;
-//    private List<EpicDto> epics;
 }

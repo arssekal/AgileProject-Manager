@@ -1,8 +1,12 @@
 package com.arssekal.AgileManager.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,12 +21,14 @@ public class Sprint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime dateDebut;
-    private LocalDateTime dateFin;
+    @FutureOrPresent
+    private LocalDate dateDebut;
+    @Future
+    private LocalDate dateFin;
     @OneToOne
     @JoinColumn(name = "sprintBacklog_id")
     private SprintBacklog sprintBacklog;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "scrumMaster_id")
     private ScrumMaster scrumMaster;
 }
