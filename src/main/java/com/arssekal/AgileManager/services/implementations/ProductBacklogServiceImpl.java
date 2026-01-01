@@ -59,6 +59,11 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
         return userStoryDtos;
     }
 
+    @Override
+    public Long userStoriesOverView(Long backlogId) {
+        return 0L;
+    }
+
     private ProductBacklog productBacklog(Long id) {
         return productBacklogRepository.findById(id).orElseThrow(() -> new ProductBacklogNotFoundException(id));
     }

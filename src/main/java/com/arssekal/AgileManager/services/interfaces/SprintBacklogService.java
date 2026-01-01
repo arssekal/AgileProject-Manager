@@ -6,7 +6,7 @@ import com.arssekal.AgileManager.dtos.UserStoryDto;
 import java.util.List;
 
 public interface SprintBacklogService {
-    SprintBacklogDto createSprint(SprintBacklogDto sprintBacklogDto);
+    SprintBacklogDto createSprint(Long projectId, SprintBacklogDto sprintBacklogDto);
 
     SprintBacklogDto getSprintDetails(Long id);
 

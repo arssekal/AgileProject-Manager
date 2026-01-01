@@ -23,8 +23,9 @@ public class SprintBacklog {
     @NotBlank
     @Size(min = 3, max = 50, message = "la longueur de nom du sprintBacklog dois etre entre 3 et 50")
     private String nom;
+    private String description;
     @OneToMany(mappedBy = "sprintBacklog")
-    private List<UserStory> UserStories;
+    private List<UserStory> userStories;
     @OneToOne(mappedBy = "sprintBacklog")
     private Sprint sprint;
 }

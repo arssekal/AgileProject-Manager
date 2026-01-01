@@ -14,4 +14,6 @@ public interface ProductBacklogService {
     List<EpicDto> getProductBacklogEpics(Long backlogId);
 
     List<UserStoryDto> getProductBacklogUserStories(Long backlogId);
+
+    Long userStoriesOverView(Long backlogId);
 }

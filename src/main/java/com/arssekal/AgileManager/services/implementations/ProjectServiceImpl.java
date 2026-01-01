@@ -2,6 +2,7 @@ package com.arssekal.AgileManager.services.implementations;
 
 import com.arssekal.AgileManager.dtos.ProductBacklogDto;
 import com.arssekal.AgileManager.dtos.ProjectDto;
+import com.arssekal.AgileManager.dtos.SprintBacklogDto;
 import com.arssekal.AgileManager.entities.Epic;
 import com.arssekal.AgileManager.entities.ProductBacklog;
 import com.arssekal.AgileManager.entities.ProductOwner;
@@ -14,6 +15,8 @@ import com.arssekal.AgileManager.services.interfaces.ProjectService;
 import com.arssekal.AgileManager.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -72,6 +75,44 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = project(projectID);
         return Mapper.mapToProductBacklogDto(project.getProductBacklog());
     }
+
+    @Override
+    public List<ProjectDto> getAllProject() {
+        return projectRepository.findAll().stream()
+                .map((project) -> {
+                    return Mapper.mapToProjectDto(project);
+                })
+                .toList();
+    }
+
+    @Override
+    public List<SprintBacklogDto> getSprints(Long projectID) {
+        Project project = project(projectID);
+        return project.getSprints().stream()
+                .map((sprint -> {
+                    return SprintBacklogDto.builder()
+                            .id(sprint.getId())
+                            .nom(sprint.getSprintBacklog().getNom())
+                            .description(sprint.getSprintBacklog().getDescription())
+                            .dateDebut(sprint.getDateDebut())
+                            .dateFin(sprint.getDateFin())
+                            .build();
+                })).toList();
+    }
+
+    @Override
+    public List<ProjectDto> getLastThreeProjects() {
+        return projectRepository.findTop3ByOrderByCreatedAtDesc().stream()
+                .map((project -> {
+                    return ProjectDto.builder()
+                            .nom(project.getNom())
+                            .description(project.getDescription())
+                            .createdAt(project.getCreatedAt())
+                            .status(project.getStatus())
+                            .build();
+                })).toList();
+    }
+
     private Project project(Long id) {
         return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }

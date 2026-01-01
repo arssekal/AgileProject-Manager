@@ -3,6 +3,7 @@ package com.arssekal.AgileManager.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.arssekal.AgileManager.enums.OtherStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.Future;
@@ -31,4 +32,7 @@ public class Sprint {
     @ManyToOne
     @JoinColumn(name = "scrumMaster_id")
     private ScrumMaster scrumMaster;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }

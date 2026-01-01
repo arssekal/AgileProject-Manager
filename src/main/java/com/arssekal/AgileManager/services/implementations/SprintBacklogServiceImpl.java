@@ -2,17 +2,12 @@ package com.arssekal.AgileManager.services.implementations;
 
 import com.arssekal.AgileManager.dtos.SprintBacklogDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
-import com.arssekal.AgileManager.entities.ScrumMaster;
-import com.arssekal.AgileManager.entities.Sprint;
-import com.arssekal.AgileManager.entities.SprintBacklog;
-import com.arssekal.AgileManager.entities.UserStory;
+import com.arssekal.AgileManager.entities.*;
+import com.arssekal.AgileManager.exceptions.ProjectNotFoundException;
 import com.arssekal.AgileManager.exceptions.SprintBacklogNotFoundException;
 import com.arssekal.AgileManager.exceptions.UserStoryNotFoundException;
 import com.arssekal.AgileManager.mappers.Mapper;
-import com.arssekal.AgileManager.repositories.SprintBacklogRepository;
-import com.arssekal.AgileManager.repositories.SprintRepository;
-import com.arssekal.AgileManager.repositories.UserRepository;
-import com.arssekal.AgileManager.repositories.UserStoryRepository;
+import com.arssekal.AgileManager.repositories.*;
 import com.arssekal.AgileManager.services.interfaces.SprintBacklogService;
 import com.arssekal.AgileManager.services.interfaces.UserService;
 import com.arssekal.AgileManager.services.interfaces.UserStoryService;
@@ -33,9 +28,12 @@ public class SprintBacklogServiceImpl implements SprintBacklogService {
     private UserService userService;
     @Autowired
     private UserStoryRepository userStoryRepository;
+    @Autowired
+    ProjectRepository projectRepository;
 
     @Override
-    public SprintBacklogDto createSprint(SprintBacklogDto sprintBacklogDto) {
+    public SprintBacklogDto createSprint(Long projectId, SprintBacklogDto sprintBacklogDto) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
         SprintBacklog sprintBacklog = Mapper.mapToSprintBacklog(sprintBacklogDto);
         ScrumMaster scrumMaster = (ScrumMaster) userService.getUser(sprintBacklogDto.getScrumMasterId());
 
@@ -44,6 +42,7 @@ public class SprintBacklogServiceImpl implements SprintBacklogService {
                 .dateFin(sprintBacklogDto.getDateFin())
                 .scrumMaster(scrumMaster)
                 .sprintBacklog(sprintBacklog)
+                .project(project)
                 .build();
         SprintBacklog savedSprintBacklog = sprintBacklogRepository.save(sprintBacklog);
         sprintRepository.save(sprint);

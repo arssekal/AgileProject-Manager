@@ -10,6 +10,8 @@ public class Mapper {
                 .id(projectDto.getId())
                 .nom(projectDto.getNom())
                 .description(projectDto.getDescription())
+                .status(projectDto.getStatus())
+                .createdAt(projectDto.getCreatedAt())
                 .build();
     }
     public static ProjectDto mapToProjectDto(Project project) {
@@ -17,6 +19,8 @@ public class Mapper {
                 .id(project.getId())
                 .nom(project.getNom())
                 .description(project.getDescription())
+                .status(project.getStatus())
+                .createdAt(project.getCreatedAt())
                 .productBacklogData(Mapper.mapToProductBacklogDto(project.getProductBacklog()))
                 .productOwnerId(project.getProductOwner().getId())
                 .build();
@@ -62,12 +66,14 @@ public class Mapper {
         return SprintBacklog.builder()
                 .id(sprintBacklogDto.getId())
                 .nom(sprintBacklogDto.getNom())
+                .description(sprintBacklogDto.getDescription())
                 .build();
     }
     public static SprintBacklogDto mapToSprintBacklogDto(SprintBacklog sprintBacklog) {
         return SprintBacklogDto.builder()
                 .id(sprintBacklog.getId())
                 .nom(sprintBacklog.getNom())
+                .description(sprintBacklog.getDescription())
                 .build();
     }
     // task mapping

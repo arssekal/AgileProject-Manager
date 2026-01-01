@@ -5,10 +5,7 @@ import com.arssekal.AgileManager.entities.ProductOwner;
 import com.arssekal.AgileManager.entities.ScrumMaster;
 import com.arssekal.AgileManager.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,4 +25,5 @@ public class UserController {
     public void createDeveloper(@RequestBody Developer developer) {
         userService.createDeveloper(developer);
     }
+    @GetMapping
 }

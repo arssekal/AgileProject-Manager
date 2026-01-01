@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class SprintBacklogDto {
     private Long id;
     private String nom;
+    private String description;
     private Long scrumMasterId;
     private LocalDate dateDebut;
     private LocalDate dateFin;
