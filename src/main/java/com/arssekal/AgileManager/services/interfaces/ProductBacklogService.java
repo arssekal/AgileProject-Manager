@@ -1,6 +1,7 @@
 package com.arssekal.AgileManager.services.interfaces;
 
 import com.arssekal.AgileManager.dtos.EpicDto;
+import com.arssekal.AgileManager.dtos.EpicWithStoriesDto;
 import com.arssekal.AgileManager.dtos.ProductBacklogDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 
@@ -16,4 +17,8 @@ public interface ProductBacklogService {
     List<UserStoryDto> getProductBacklogUserStories(Long backlogId);
 
     Long userStoriesOverView(Long backlogId);
+
+    List<EpicWithStoriesDto> getEpicsWithStories(Long backlogId);
+
+    List<ProductBacklogDto> getAllProductBacklogs();
 }

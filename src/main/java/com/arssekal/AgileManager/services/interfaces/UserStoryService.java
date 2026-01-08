@@ -19,4 +19,6 @@ public interface UserStoryService {
     UserStoryDto deleteUseStoryWithTasks(Long userStoryId);
 
     UserStoryDto changeUserStoryStatus(Long id, Status status);
+
+    List<UserStoryDto> getListUserStories(List<Long> userStoriesId);
 }

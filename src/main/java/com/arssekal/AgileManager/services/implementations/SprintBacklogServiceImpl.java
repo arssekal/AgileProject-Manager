@@ -10,13 +10,10 @@ import com.arssekal.AgileManager.mappers.Mapper;
 import com.arssekal.AgileManager.repositories.*;
 import com.arssekal.AgileManager.services.interfaces.SprintBacklogService;
 import com.arssekal.AgileManager.services.interfaces.UserService;
-import com.arssekal.AgileManager.services.interfaces.UserStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SprintBacklogServiceImpl implements SprintBacklogService {
@@ -61,12 +58,14 @@ public class SprintBacklogServiceImpl implements SprintBacklogService {
     }
 
     @Override
-    public UserStoryDto addUserStoryToSprint(Long sprintBacklogId, Long storyId) {
+    public  List<Long> addUserStoryToSprint(Long sprintBacklogId, List<Long> storiesId) {
         SprintBacklog sprintBacklog = sprintBacklog(sprintBacklogId);
-        UserStory userStory = userStoryRepository.findById(storyId).orElseThrow(() -> new UserStoryNotFoundException(storyId));
-        userStory.setSprintBacklog(sprintBacklog);
-        UserStory savedUserStory = userStoryRepository.save(userStory);
-        return Mapper.mapToUserStoryDto(savedUserStory);
+        for(Long storyId: storiesId) {
+            UserStory userStory = userStoryRepository.findById(storyId).orElseThrow(() -> new UserStoryNotFoundException(storyId));
+            userStory.setSprintBacklog(sprintBacklog);
+            UserStory savedUserStory = userStoryRepository.save(userStory);
+        }
+        return storiesId;
     }
 
     @Override
@@ -85,6 +84,23 @@ public class SprintBacklogServiceImpl implements SprintBacklogService {
         userStoryRepository.save(userStory);
         return Mapper.mapToUserStoryDto(userStory);
     }
+
+    @Override
+    public List<SprintBacklogDto> getActiveSprints() {
+        return sprintRepository.findAll().stream()
+                .filter(sprint -> sprint.isActive())
+                .map(sprint -> {
+                    return SprintBacklogDto.builder()
+                            .id(sprint.getSprintBacklog().getId())
+                            .nom(sprint.getSprintBacklog().getNom())
+                            .description(sprint.getSprintBacklog().getDescription())
+                            .dateDebut(sprint.getDateDebut())
+                            .dateFin(sprint.getDateFin())
+                            .build();
+                })
+                .toList();
+    }
+
     private SprintBacklog sprintBacklog(Long id) {
         return sprintBacklogRepository.findById(id).orElseThrow(() -> new SprintBacklogNotFoundException(id));
     }

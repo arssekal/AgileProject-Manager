@@ -1,6 +1,8 @@
 package com.arssekal.AgileManager.entities;
 
 import com.arssekal.AgileManager.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,12 +34,16 @@ public class User {
     private String email;
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "scrumMaster")
     private List<Sprint> sprints;
 
-    @OneToOne(mappedBy = "productOwner")
-    private Project project;
+    @JsonManagedReference // test
+    @JsonIgnore
+    @OneToMany(mappedBy = "productOwner")
+    private List<Project> projects;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "developer")
     private Task task;
 }

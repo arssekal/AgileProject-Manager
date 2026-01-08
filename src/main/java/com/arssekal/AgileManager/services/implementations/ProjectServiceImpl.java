@@ -32,7 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProductOwner productOwner = (ProductOwner) userService.getUser(projectDto.getProductOwnerId());
         Project project = Mapper.mapToProject(projectDto);
         project.setProductOwner(productOwner);
-        productOwner.setProject(project);
+//        productOwner.setProject(project);
         ProductBacklog productBacklog = Mapper.mapToProductBacklog(projectDto.getProductBacklogData());
         Epic epic = Epic.builder()
                 .titre("globale")
@@ -65,7 +65,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDto deleteProject(Long projectID) {
         Project project = project(projectID);
-        project.getProductOwner().setProject(null);
+//        project.getProductOwner().setProject(null);
         projectRepository.delete(project);
         return Mapper.mapToProjectDto(project);
     }
@@ -91,7 +91,7 @@ public class ProjectServiceImpl implements ProjectService {
         return project.getSprints().stream()
                 .map((sprint -> {
                     return SprintBacklogDto.builder()
-                            .id(sprint.getId())
+                            .id(sprint.getSprintBacklog().getId())
                             .nom(sprint.getSprintBacklog().getNom())
                             .description(sprint.getSprintBacklog().getDescription())
                             .dateDebut(sprint.getDateDebut())
@@ -111,6 +111,11 @@ public class ProjectServiceImpl implements ProjectService {
                             .status(project.getStatus())
                             .build();
                 })).toList();
+    }
+
+    @Override
+    public int getNumberOfProjects() {
+        return 0;
     }
 
     private Project project(Long id) {

@@ -1,6 +1,7 @@
 package com.arssekal.AgileManager.entities;
 
 import com.arssekal.AgileManager.enums.OtherStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -47,8 +48,9 @@ public class Project {
     private String description;
     private OtherStatus status;
     private LocalDate createdAt;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "productOwner_id")
+    @JsonBackReference // test
     private ProductOwner productOwner;
 
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)

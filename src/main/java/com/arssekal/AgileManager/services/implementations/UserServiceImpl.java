@@ -4,12 +4,15 @@ import com.arssekal.AgileManager.entities.Developer;
 import com.arssekal.AgileManager.entities.ProductOwner;
 import com.arssekal.AgileManager.entities.ScrumMaster;
 import com.arssekal.AgileManager.entities.User;
+import com.arssekal.AgileManager.enums.Role;
 import com.arssekal.AgileManager.exceptions.UserNotFoundException;
 import com.arssekal.AgileManager.repositories.UserRepository;
 import com.arssekal.AgileManager.services.interfaces.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,5 +37,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createDeveloper(Developer developer) {
         userRepository.save(developer);
+    }
+
+    @Override
+    public List<ScrumMaster> getAllScrumMasters() {
+        return userRepository.findAllScrumMasters();
+    }
+
+    @Override
+    public List<ProductOwner> getAllProductOwners() {
+        return userRepository.findAllProductOwners();
     }
 }

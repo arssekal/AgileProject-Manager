@@ -119,8 +119,6 @@ public class Mapper {
                 .priority(userStoryDto.getPriority())
                 .statut(userStoryDto.getStatut())
                 .critereAcceptation(userStoryDto.getCritereAcceptation())
-//                .epic(null)
-//                .sprintBacklog(null)
                 .build();
     }
     public static UserStoryDto mapToUserStoryDto(UserStory userStory) {
@@ -131,8 +129,6 @@ public class Mapper {
                 .priority(userStory.getPriority())
                 .statut(userStory.getStatut())
                 .critereAcceptation(userStory.getCritereAcceptation())
-//                .epic(null)
-//                .sprintBacklog(null)
                 .build();
     }
     // sprint mapping

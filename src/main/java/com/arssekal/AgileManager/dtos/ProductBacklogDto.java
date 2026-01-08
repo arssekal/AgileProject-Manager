@@ -14,4 +14,5 @@ public class ProductBacklogDto {
     private Long id;
     private String nom;
     private String description;
+    private Long projectId;
 }

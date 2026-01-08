@@ -5,6 +5,8 @@ import com.arssekal.AgileManager.entities.ProductOwner;
 import com.arssekal.AgileManager.entities.ScrumMaster;
 import com.arssekal.AgileManager.entities.User;
 
+import java.util.List;
+
 public interface UserService {
     User getUser(Long productOwnerId);
 
@@ -13,4 +15,8 @@ public interface UserService {
     void createScrumMaster(ScrumMaster scrumMaster);
 
     void createDeveloper(Developer developer);
+
+    List<ScrumMaster> getAllScrumMasters();
+
+    List<ProductOwner> getAllProductOwners();
 }

@@ -1,6 +1,7 @@
 package com.arssekal.AgileManager.services.implementations;
 
 import com.arssekal.AgileManager.dtos.EpicDto;
+import com.arssekal.AgileManager.dtos.EpicWithStoriesDto;
 import com.arssekal.AgileManager.dtos.ProductBacklogDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.entities.Epic;
@@ -62,6 +63,34 @@ public class ProductBacklogServiceImpl implements ProductBacklogService {
     @Override
     public Long userStoriesOverView(Long backlogId) {
         return 0L;
+    }
+
+    @Override
+    public List<EpicWithStoriesDto> getEpicsWithStories(Long backlogId) {
+        ProductBacklog productBacklog = productBacklog(backlogId);
+        return productBacklog.getEpics().stream().map(
+                (epic -> {
+                    List<UserStoryDto> userStories = epic.getUserStories().stream()
+                            .map((userStory -> Mapper.mapToUserStoryDto(userStory)))
+                            .toList();
+                    return EpicWithStoriesDto.builder()
+                            .id(epic.getId())
+                            .titre(epic.getTitre())
+                            .description(epic.getDescription())
+                            .userStories(userStories)
+                            .build();
+                })
+        ).toList();
+    }
+
+    @Override
+    public List<ProductBacklogDto> getAllProductBacklogs() {
+        return productBacklogRepository.findAll().stream()
+                .map((productBacklog -> {
+                    ProductBacklogDto productBacklogDto = Mapper.mapToProductBacklogDto(productBacklog);
+                    productBacklogDto.setProjectId(productBacklog.getProject().getId());
+                    return productBacklogDto;
+                })).toList();
     }
 
     private ProductBacklog productBacklog(Long id) {

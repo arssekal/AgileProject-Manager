@@ -22,15 +22,20 @@ public class SprintController {
         SprintBacklogDto sprintBacklog = sprintBacklogService.createSprint(projectId, sprintBacklogDto);
         return new ResponseEntity<>(sprintBacklog, HttpStatus.CREATED);
     }
+    @GetMapping("/active")
+    public ResponseEntity<List<SprintBacklogDto>> getActiveSprints() {
+        List<SprintBacklogDto> activeSprints = sprintBacklogService.getActiveSprints();
+        return new ResponseEntity<>(activeSprints, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<SprintBacklogDto> getSprintDetails(@PathVariable Long id) {
         SprintBacklogDto sprintBacklog = sprintBacklogService.getSprintDetails(id);
         return ResponseEntity.ok(sprintBacklog);
     }
-    @PostMapping("/{sprintBacklogId}/user-stories/{storyId}")
-    public ResponseEntity<UserStoryDto> addUserStoryToSprint(@PathVariable("sprintBacklogId") Long sprintBacklogId, @PathVariable("storyId") Long storyId) {
-        UserStoryDto userStory = sprintBacklogService.addUserStoryToSprint(sprintBacklogId, storyId);
-        return ResponseEntity.ok(userStory);
+    @PostMapping("/{sprintBacklogId}/user-stories")
+    public ResponseEntity<List<Long>> addUserStoriesToSprint(@PathVariable("sprintBacklogId") Long sprintBacklogId, @RequestBody List<Long> storiesId) {
+        List<Long> returnedIds = sprintBacklogService.addUserStoryToSprint(sprintBacklogId, storiesId);
+        return ResponseEntity.ok(returnedIds);
     }
     @GetMapping("/{id}/user-stories")
     public ResponseEntity<List<UserStoryDto>> getSprintUserStories(@PathVariable("id") Long id) {

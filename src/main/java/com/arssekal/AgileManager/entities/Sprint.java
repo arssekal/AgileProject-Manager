@@ -35,4 +35,9 @@ public class Sprint {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    public boolean isActive() {
+        LocalDate today = LocalDate.now();
+        return (today.isAfter(dateDebut) || today.isEqual(dateDebut)) && today.isBefore(dateFin);
+    }
 }
