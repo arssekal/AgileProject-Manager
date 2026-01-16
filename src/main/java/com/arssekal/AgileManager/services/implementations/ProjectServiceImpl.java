@@ -32,7 +32,6 @@ public class ProjectServiceImpl implements ProjectService {
         ProductOwner productOwner = (ProductOwner) userService.getUser(projectDto.getProductOwnerId());
         Project project = Mapper.mapToProject(projectDto);
         project.setProductOwner(productOwner);
-        productOwner.setProject(project);
         ProductBacklog productBacklog = Mapper.mapToProductBacklog(projectDto.getProductBacklogData());
         Epic epic = Epic.builder()
                 .titre("globale")
@@ -65,7 +64,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDto deleteProject(Long projectID) {
         Project project = project(projectID);
-        project.getProductOwner().setProject(null);
         projectRepository.delete(project);
         return Mapper.mapToProjectDto(project);
     }

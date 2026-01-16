@@ -1,6 +1,7 @@
 package com.arssekal.AgileManager.entities;
 
 import com.arssekal.AgileManager.enums.OtherStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,13 +48,16 @@ public class Project {
     @Size(min = 10, max = 100, message = "la longueur de description du projet dois etre entre 10 et 100")
     private String description;
     private OtherStatus status;
+    @CreatedDate
     private LocalDate createdAt;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "productOwner_id")
+    @JsonBackReference // test
     private ProductOwner productOwner;
 
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
     private ProductBacklog productBacklog;
+
     @OneToMany(mappedBy = "project")
     private List<Sprint> sprints;
 }
