@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -47,6 +48,7 @@ public class Project {
     @Size(min = 10, max = 100, message = "la longueur de description du projet dois etre entre 10 et 100")
     private String description;
     private OtherStatus status;
+    @CreatedDate
     private LocalDate createdAt;
     @ManyToOne
     @JoinColumn(name = "productOwner_id")
@@ -55,6 +57,7 @@ public class Project {
 
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
     private ProductBacklog productBacklog;
+
     @OneToMany(mappedBy = "project")
     private List<Sprint> sprints;
 }

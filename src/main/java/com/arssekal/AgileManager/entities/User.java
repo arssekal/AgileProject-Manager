@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -21,8 +22,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
-@Builder
+@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email"}) }
+)
+@SuperBuilder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +33,10 @@ public class User {
     @NotBlank
     @Size(min = 3, max = 30, message = "le nom ne dois étre entre 3 et 10")
     private String nom;
+    @Size(min = 3, max = 30, message = "le nom ne dois étre entre 3 et 10")
+    private String prenom;
     @Email(message = "l'email n'est pas valid")
+    @Column(name = "email")
     private String email;
     private String password;
 
@@ -46,4 +52,14 @@ public class User {
     @JsonIgnore
     @OneToOne(mappedBy = "developer")
     private Task task;
+
+    @Transient
+    public Role getRole() {
+        return switch (this) {
+            case ProductOwner productOwner -> Role.PRODUCT_OWNER;
+            case ScrumMaster scrumMaster -> Role.SCRUM_MASTER;
+            case Developer developer -> Role.DEVELOPER;
+            default -> null;
+        };
+    }
 }

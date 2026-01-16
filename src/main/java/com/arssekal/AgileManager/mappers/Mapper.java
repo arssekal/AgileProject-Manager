@@ -98,6 +98,7 @@ public class Mapper {
         return User.builder()
                 .id(userDto.getId())
                 .nom(userDto.getNom())
+                .prenom(userDto.getPrenom())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
                 .build();
@@ -106,8 +107,10 @@ public class Mapper {
         return UserDto.builder()
                 .id(user.getId())
                 .nom(user.getNom())
+                .prenom(user.getPrenom())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .role(user.getRole())
                 .build();
     }
     // userStory mapping

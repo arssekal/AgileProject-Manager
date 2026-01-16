@@ -1,13 +1,14 @@
 package com.arssekal.AgileManager;
 
+import com.arssekal.AgileManager.entities.ProductOwner;
+import com.arssekal.AgileManager.entities.User;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class test {
     public static void main(String[] args) {
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        System.out.println(dateTimeFormatter.format(localDate));
-        System.out.println(localDate.toString());
+        User user = new User();
+        System.out.println(user.getRole());
     }
 }
