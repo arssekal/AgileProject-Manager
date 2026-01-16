@@ -1,7 +1,6 @@
 package com.arssekal.AgileManager.controllers;
 
 import com.arssekal.AgileManager.dtos.EpicDto;
-import com.arssekal.AgileManager.dtos.EpicWithStoriesDto;
 import com.arssekal.AgileManager.dtos.ProductBacklogDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.services.interfaces.ProductBacklogService;
@@ -18,12 +17,6 @@ import java.util.List;
 public class ProductBacklogController {
     @Autowired
     private ProductBacklogService productBacklogService;
-
-    @GetMapping
-    public ResponseEntity<?> getProductAllBacklogs() {
-        List<ProductBacklogDto> productBacklogs = productBacklogService.getAllProductBacklogs();
-        return ResponseEntity.ok(productBacklogs);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductBacklog(@PathVariable Long id) {
@@ -43,19 +36,13 @@ public class ProductBacklogController {
         return ResponseEntity.ok(epics);
     }
 
-    @GetMapping("/{id}/epics-details")
-    public ResponseEntity<?> getEpicsWithStories(@PathVariable("id") Long backlogId) {
-        List<EpicWithStoriesDto> epicsWithStories = productBacklogService.getEpicsWithStories(backlogId);
-        return ResponseEntity.ok(epicsWithStories);
-    }
-
     @GetMapping("/{id}/user-stories")
     public ResponseEntity<?> getUserStories(@PathVariable("id") Long backlogId) {
         List<UserStoryDto> userStories = productBacklogService.getProductBacklogUserStories(backlogId);
         return ResponseEntity.ok(userStories);
     }
 
-    @GetMapping("/{id}/user-stories/count-done")
+    @GetMapping("/{id}/user-stories/done")
     public ResponseEntity<?> countDoneUserStories(@PathVariable("id") Long backlogId) {
         Long countDonUserStories = productBacklogService.userStoriesOverView(backlogId);
         return ResponseEntity.ok(countDonUserStories);

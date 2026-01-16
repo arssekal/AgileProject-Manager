@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.util.List;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/projects")
@@ -27,7 +26,7 @@ public class ProjectController {
         List<ProjectDto> projects = projectService.getAllProject();
         return ResponseEntity.ok(projects);
     }
-    @GetMapping("recent")
+    @GetMapping("last-three")
     public ResponseEntity<List<ProjectDto>> getLastThreeProjects() {
         List<ProjectDto> projects = projectService.getLastThreeProjects();
         return ResponseEntity.ok(projects);
@@ -67,11 +66,5 @@ public class ProjectController {
     public ResponseEntity<?> getSprints(@PathVariable("id") Long projectID) {
         List<SprintBacklogDto>  sprints = projectService.getSprints(projectID);
         return ResponseEntity.ok(sprints);
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<?> getProjectsCount() {
-        int  numberOfProjects = projectService.getNumberOfProjects();
-        return ResponseEntity.ok(numberOfProjects);
     }
 }

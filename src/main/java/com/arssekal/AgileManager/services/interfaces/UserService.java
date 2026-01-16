@@ -16,15 +16,7 @@ public interface UserService {
 
     List<ScrumMaster> getAllScrumMasters();
 
-<<<<<<< HEAD
-    void createDeveloper(Developer developer);
-
-    List<ScrumMaster> getAllScrumMasters();
-
-    List<ProductOwner> getAllProductOwners();
-=======
     List<ProductOwner> getAllProductOwners();
 
     AuthResponseDto loginLogic(UserDto user);
->>>>>>> mybranch
 }

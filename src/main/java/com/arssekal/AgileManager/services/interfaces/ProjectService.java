@@ -23,6 +23,4 @@ public interface ProjectService {
     List<SprintBacklogDto> getSprints(Long projectID);
 
     List<ProjectDto> getLastThreeProjects();
-
-    int getNumberOfProjects();
 }

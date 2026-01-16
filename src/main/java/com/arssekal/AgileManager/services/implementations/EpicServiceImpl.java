@@ -1,7 +1,6 @@
 package com.arssekal.AgileManager.services.implementations;
 
 import com.arssekal.AgileManager.dtos.EpicDto;
-import com.arssekal.AgileManager.dtos.EpicWithStoriesDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.entities.Epic;
 import com.arssekal.AgileManager.entities.UserStory;
@@ -76,20 +75,6 @@ public class EpicServiceImpl implements EpicService {
         }));
         epicRepository.delete(epic);
         return Mapper.mapToEpicDto(epic);
-    }
-
-    @Override
-    public EpicWithStoriesDto getEpicWithStories(Long id) {
-        Epic epic = epic(id);
-        List<UserStoryDto> userStories = epic.getUserStories().stream()
-                .map((userStory -> Mapper.mapToUserStoryDto(userStory)))
-                .toList();
-        return  EpicWithStoriesDto.builder()
-                .id(epic.getId())
-                .titre(epic.getTitre())
-                .description(epic.getDescription())
-                .userStories(userStories)
-                .build();
     }
 
     private Epic epic(Long id) {

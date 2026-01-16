@@ -1,7 +1,6 @@
 package com.arssekal.AgileManager.controllers;
 
 import com.arssekal.AgileManager.dtos.EpicDto;
-import com.arssekal.AgileManager.dtos.EpicWithStoriesDto;
 import com.arssekal.AgileManager.dtos.ProjectDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 import com.arssekal.AgileManager.services.interfaces.EpicService;
@@ -24,11 +23,6 @@ public class EpicController {
     public ResponseEntity<?> getEpicDetails(@PathVariable Long id) {
         EpicDto epic = epicService.getEpicDetails(id);
         return ResponseEntity.ok(epic);
-    }
-    @GetMapping("/with-stories/{id}")
-    public ResponseEntity<?> getEpicWithStories(@PathVariable Long id) {
-        EpicWithStoriesDto epicWithStories = epicService.getEpicWithStories(id);
-        return ResponseEntity.ok(epicWithStories);
     }
     // Modifier l'Epic (titre, description, statut).
     @PutMapping("/{id}")
@@ -56,9 +50,8 @@ public class EpicController {
     }
     // Supprimer l'Epic et mettre ses user stories dans epic général.
     @DeleteMapping("/{id}")
-    // this deletes the epic and its user stories goes to the global epic
     public ResponseEntity<String> deleteEpicOnly(@PathVariable("id") Long epicId) {
-        EpicDto epic = epicService.deleteEpic(epicId);
+        EpicDto epic = epicService.deleteEpicAndUserStories(epicId);
         return ResponseEntity.ok("epic deleted successfully");
     }
 }

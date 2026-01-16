@@ -7,7 +7,6 @@ import com.arssekal.AgileManager.entities.ProductOwner;
 import com.arssekal.AgileManager.entities.ScrumMaster;
 import com.arssekal.AgileManager.entities.User;
 import com.arssekal.AgileManager.services.interfaces.UserService;
-import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,18 +54,4 @@ public class UserController {
         // this returned somme unused values
         return  userService.getAllProductOwners();
     }
-<<<<<<< HEAD
-    @GetMapping("/scrum-master/all")
-    public List<ScrumMaster> getAllScrumMasters() {
-        // this returned somme unused values
-        return  userService.getAllScrumMasters();
-    }
-
-    @GetMapping("/product-owner/all")
-    public List<ProductOwner> getAllProductOwners() {
-        // this returned somme unused values
-        return  userService.getAllProductOwners();
-    }
-=======
->>>>>>> mybranch
 }

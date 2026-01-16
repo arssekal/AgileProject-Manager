@@ -10,4 +10,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public class Developer extends User {
+
 }

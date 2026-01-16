@@ -107,16 +107,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllProductOwners();
     }
 
-<<<<<<< HEAD
-    @Override
-    public List<ScrumMaster> getAllScrumMasters() {
-        return userRepository.findAllScrumMasters();
-    }
-
-    @Override
-    public List<ProductOwner> getAllProductOwners() {
-        return userRepository.findAllProductOwners();
-    }
-=======
->>>>>>> mybranch
 }

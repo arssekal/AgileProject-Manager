@@ -10,11 +10,9 @@ public interface SprintBacklogService {
 
     SprintBacklogDto getSprintDetails(Long id);
 
-    List<Long> addUserStoryToSprint(Long sprintBacklogId, List<Long> storiesId);
+    UserStoryDto addUserStoryToSprint(Long sprintBacklogId, Long storyId);
 
     List<UserStoryDto> getSprintUserStories(Long id);
 
     UserStoryDto removeUserStory(Long sprintBacklogId, Long storyId);
-
-    List<SprintBacklogDto> getActiveSprints();
 }

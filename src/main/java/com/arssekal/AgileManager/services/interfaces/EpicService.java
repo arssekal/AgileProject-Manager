@@ -1,7 +1,6 @@
 package com.arssekal.AgileManager.services.interfaces;
 
 import com.arssekal.AgileManager.dtos.EpicDto;
-import com.arssekal.AgileManager.dtos.EpicWithStoriesDto;
 import com.arssekal.AgileManager.dtos.UserStoryDto;
 
 import java.util.List;
@@ -18,6 +17,4 @@ public interface EpicService {
     EpicDto deleteEpic(Long epicId);
 
     EpicDto deleteEpicAndUserStories(Long epicId);
-
-    EpicWithStoriesDto getEpicWithStories(Long id);
 }

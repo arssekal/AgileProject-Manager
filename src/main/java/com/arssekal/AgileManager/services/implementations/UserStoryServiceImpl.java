@@ -76,13 +76,6 @@ public class UserStoryServiceImpl implements UserStoryService {
         return  Mapper.mapToUserStoryDto(savedUserStory);
     }
 
-    @Override
-    public List<UserStoryDto> getListUserStories(List<Long> userStoriesId) {
-        return userStoriesId.stream().map((storyId) -> {
-            return Mapper.mapToUserStoryDto(userStory(storyId));
-        }).toList();
-    }
-
     private UserStory userStory(Long id) {
         return userStoryRepository.findById(id).orElseThrow(() -> new UserStoryNotFoundException(id));
     }
